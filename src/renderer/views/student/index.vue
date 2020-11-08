@@ -36,7 +36,7 @@
           {{ scope.row.createTime }}
         </template>
       </el-table-column>
-      <el-table-column label="操作" min-width="55" align="center">
+      <el-table-column label="操作" width="245" align="center">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="dialogFormVisible = true; student = scope.row">编辑</el-button>
           <el-button type="warning" size="mini" @click="handleRemove(scope.$index, scope.row)">删除</el-button>

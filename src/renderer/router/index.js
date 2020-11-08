@@ -111,6 +111,18 @@ export const constantRouterMap = [
       }
     ]
   },
+  {
+    path: '/analysis',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Analysis',
+        component: () => import('@/views/analysis/index'),
+        meta: { title: '数据分析', icon: 'Graph' }
+      }
+    ]
+  },
   { path: '*', redirect: '/404', hidden: true }
 ]
 

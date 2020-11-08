@@ -6,13 +6,12 @@
       </el-input>
     </div>
     <el-table
-        :data="historyList"
+        :data="page.content"
         v-loading.body="listLoading"
         element-loading-text="Loading"
-        border
-        fit
-        stripe
+        border fit stripe
         highlight-current-row
+        style="margin-bottom: 10px"
     >
       <el-table-column label='序号' min-width="20" align="center">
         <template slot-scope="scope">
@@ -60,6 +59,12 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="page.totalElements"
+        @current-change="handlePageChange">
+    </el-pagination>
   </div>
 </template>
 
@@ -70,7 +75,7 @@ import { pageStuNameLike } from '../../api/history'
 export default {
   data() {
     return {
-      historyList: [],
+      page: {},
       listLoading: true,
       studentName: ''
     }
@@ -94,8 +99,8 @@ export default {
       _this.listLoading = true
       historyPage({ page: 0, size: 50 }).then(response => {
         _this.listLoading = false
-        const data = response.data
-        _this.historyList = data.content
+        _this.page = response.data
+        console.log(response.data)
       })
     },
     handleSaveLesson() {
@@ -114,6 +119,13 @@ export default {
     handleShowTableClick(data) {
       this.$router.push({
         path: '/dashboard', query: { userId: data.userId }
+      })
+    },
+    handlePageChange(page) {
+      const _this = this
+      historyPage({ page, size: 50 }).then(response => {
+        _this.page = response.data
+        _this.$message({ type: 'success', message: '数据加载完成' })
       })
     }
   }
